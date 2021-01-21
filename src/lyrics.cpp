@@ -105,14 +105,18 @@ void moonk5::malv::lyrics_synchronizer::run() {
 bool moonk5::malv::lyrics_synchronizer::_load_lyrics(const std::string& title,
     const std::string& artist) {
   if (!m_lyrics.read(title, artist))  {
-    // lyrics fetching 
     alsong::lyrics_fetcher lyrics_fetcher;
     std::string resp = "";
-    lyrics_fetcher.fetch(title, artist, resp, 20);
-    
-    // save to a file
-    m_lyrics.parse(resp, title, artist);
-    if (!m_lyrics.write())
+    lyrics_fetcher.fetch_lyric_list(title, artist, resp);
+    m_lyrics.parse_lyric_list(resp);
+
+    if (m_lyrics.get_song_list_collection().empty())
+      return false;
+
+    resp = "";
+    lyrics_fetcher.fetch_lyric(m_lyrics.get_song_list_collection()[0].lyric_id, resp);
+    m_lyrics.parse_lyric(resp, title, artist);
+    if (!m_lyrics.write(title, artist))
       return false;
   }
   return true;

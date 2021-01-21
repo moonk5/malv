@@ -17,10 +17,15 @@ namespace moonk5
           song(int id, mpd_song *song)
             : m_id(id)
             , m_song(song, mpd_song_free) { 
-            if (mpd_song_get_tag(m_song.get(), MPD_TAG_TITLE, 0) != nullptr) {
+            if (mpd_song_get_tag(m_song.get(), MPD_TAG_TITLE, 0) != nullptr ||
+                mpd_song_get_tag(m_song.get(), MPD_TAG_ARTIST, 0) != nullptr) {
               m_title = mpd_song_get_tag(m_song.get(), MPD_TAG_TITLE, 0);
               m_artist = mpd_song_get_tag(m_song.get(), MPD_TAG_ARTIST, 0);
-              m_album = mpd_song_get_tag(m_song.get(), MPD_TAG_ALBUM, 0);
+              if (mpd_song_get_tag(m_song.get(), MPD_TAG_ALBUM, 0) != nullptr) {
+                m_album = mpd_song_get_tag(m_song.get(), MPD_TAG_ALBUM, 0);
+              }
+            } else {
+              std::cerr << "New song detected with tags missing!!!\n";
             }
           }
 
