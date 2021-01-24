@@ -79,6 +79,16 @@ void moonk5::malv::mpd::player::random()
   });
 }
 
+int moonk5::malv::mpd::player::get_delay()
+{
+  return m_delay;
+}
+
+void moonk5::malv::mpd::player::set_delay(int delay)
+{
+  m_delay = delay;
+}
+
 void moonk5::malv::mpd::player::adjust_delay(int delay)
 {
   m_delay += delay;
@@ -95,11 +105,6 @@ void moonk5::malv::mpd::player::stop_thread()
 moonk5::malv::mpd::player::state moonk5::malv::mpd::player::get_state()
 {
   return m_state;
-}
-
-int moonk5::malv::mpd::player::get_delay()
-{
-  return m_delay;
 }
 
 moonk5::malv::mpd::song& moonk5::malv::mpd::player::get_curr_song()

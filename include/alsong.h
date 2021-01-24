@@ -4,7 +4,7 @@
  * version 1.0.0
  * https://github.com/moonk5/alsong-lyrics-fetcher.git
  *
- * Copyright (C) 2018 moonk5
+ * Copyright (C) 2018-2021 moonk5
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -85,6 +85,7 @@ namespace moonk5
       std::string album = "";
       std::string written_by = "";
       unsigned int language_count = 0;
+      int delay = 0;
 
       std::vector<time_lyrics> lyrics_collection;
       void add_lyrics(const std::string& time, const std::string& lyrics);

@@ -78,6 +78,7 @@ std::string moonk5::alsong::song_info::to_json_string() {
   str_json += "\"artist\":\"" + artist + "\",";
   str_json += "\"album\":\"" + album + "\",";
   str_json += "\"written_by\":\"" + written_by + "\",";
+  str_json += "\"delay\":" + std::to_string(delay) + ",";
   str_json += "\"lyrics\":[";
   for (alsong::time_lyrics tl : lyrics_collection)
     str_json += tl.to_json_string() + ",";
@@ -182,7 +183,7 @@ bool moonk5::alsong::lyrics_serializer::parse_lyric_list(const std::string& also
     song_list_collection.push_back(list);
 
     ++count;
-    if (count >= max_lyrics_count)
+    if (count >= 50)
       break;
   }
 
@@ -215,6 +216,7 @@ bool moonk5::alsong::lyrics_serializer::parse_lyric(const std::string& alsong_ra
   song.artist = artist;
   song.album = find_child(&child, "album");
   song.written_by = find_child(&child, "registerName");
+  song.delay = 0;
   std::string lyrics_raw = find_child(&child, "lyric");
   parse_lyrics(lyrics_raw, song);
 
@@ -280,6 +282,7 @@ bool moonk5::alsong::lyrics_serializer::read(const std::string& title,
       song.artist = s.at("artist");
       song.album = s.at("album");
       song.written_by = s.at("written_by");
+      song.delay = s.at("delay");
       auto& tls = s.at("lyrics");
       for (auto&& tl : tls) {
         auto& ls = tl.at("lyrics");

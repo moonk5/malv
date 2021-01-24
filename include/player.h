@@ -39,7 +39,6 @@ namespace moonk5
           void prev_track();
           void next_track(); 
           void random();
-          void adjust_delay(int delay);
 
           void run();
           void quit();
@@ -54,8 +53,11 @@ namespace moonk5
           state get_state();
           song& get_curr_song();
           song& get_next_song();
+          
           int get_delay();
-
+          void set_delay(int delay);
+          void adjust_delay(int delay);
+          
           unsigned get_elapsed();
 
         private:

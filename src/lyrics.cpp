@@ -39,7 +39,6 @@ void moonk5::malv::lyrics_synchronizer::run() {
       mpd::song& tmp = m_player.get_curr_song();
       if (tmp.id() != m_song.id() && tmp.title() != m_song.title()) { 
         m_song = tmp;
-        delay = 0;
         idx_lyrics = 0;
         m_idx_song_collection = 0;
         m_len_song_collection = m_lyrics.get_song_collection().size();
@@ -49,10 +48,16 @@ void moonk5::malv::lyrics_synchronizer::run() {
           lyrics_exist = true;
           mpd_elapsed_time = m_player.get_elapsed();
           total_elapsed_time = mpd_elapsed_time;
+
+          delay = m_lyrics.get_song_collection()[0].delay;
+          m_player.set_delay(delay);
+          m_ui.write_status_delay(delay);
+
           // advance  if total_time != 0
           // which means mpd was already playing some songs
           _advance_idx_lyrics(total_elapsed_time, idx_lyrics,
               m_lyrics.get_song_collection());
+          
           m_ui.write_text("");
         } else {
           m_ui.write_text("No Lyrics Exists for this tune!");
